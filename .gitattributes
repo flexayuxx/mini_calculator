@@ -1,2 +1,72 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+/*
+ * A console‑based mini calculator
+ * --------------------------------
+ * Features:
+ *   • Addition, Subtraction, Multiplication, Division
+ *   • Loop until the user chooses to exit
+ *   • Clean separation of logic into small functions
+ *   • Division‑by‑zero protection
+ *
+ * Ayush — tweak, extend, and have fun!
+ */
+
+#include <stdio.h>
+
+/* ── Function Prototypes ───────────────────────────────────────────── */
+double add      (double a, double b);
+double subtract (double a, double b);
+double multiply (double a, double b);
+double divide   (double a, double b);
+
+/* ── Main Program ──────────────────────────────────────────────────── */
+int main(void)
+{
+    int    choice;
+    double x, y, result;
+
+    do {
+        /* Menu */
+        printf("\n====== MINI CALCULATOR ======\n");
+        printf(" 1. Addition (+)\n");
+        printf(" 2. Subtraction (−)\n");
+        printf(" 3. Multiplication (×)\n");
+        printf(" 4. Division (÷)\n");
+        printf(" 5. Exit\n");
+        printf("-----------------------------\n");
+        printf("Select an option (1‑5): ");
+        if (scanf("%d", &choice) != 1) {
+            fprintf(stderr, "Invalid input — exiting.\n");
+            return 1;
+        }
+
+        /* For options 1‑4 ask for operands */
+        if (choice >= 1 && choice <= 4) {
+            printf("Enter first number : ");
+            scanf("%lf", &x);
+            printf("Enter second number: ");
+            scanf("%lf", &y);
+        }
+
+        /* Dispatch */
+        switch (choice) {
+            case 1: result = add(x, y);                printf("Result = %.2lf\n", result); break;
+            case 2: result = subtract(x, y);           printf("Result = %.2lf\n", result); break;
+            case 3: result = multiply(x, y);           printf("Result = %.2lf\n", result); break;
+            case 4:
+                if (y == 0) puts("Error: division by zero!");
+                else { result = divide(x, y);          printf("Result = %.2lf\n", result); }
+                break;
+            case 5: puts("Goodbye!"); break;
+            default: puts("⚠️  Please choose 1‑5 only.");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+
+/* ── Function Definitions ──────────────────────────────────────────── */
+double add      (double a, double b) { return a + b; }
+double subtract (double a, double b) { return a - b; }
+double multiply (double a, double b) { return a * b; }
+double divide   (double a, double b) { return a / b; }
+
